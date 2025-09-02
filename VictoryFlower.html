@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>胜利花</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>抗战胜利花</title>
   <style>
-    body, html {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #f0f0f0;
+      height: 100vh;
+      background: #fffaf0;
+      font-family: sans-serif;
     }
     canvas {
       display: block;
@@ -19,38 +20,40 @@
   </style>
 </head>
 <body>
-  <canvas id="flowerCanvas" width="300" height="300"></canvas>
+  <canvas id="flower" width="300" height="300"></canvas>
+
   <script>
-    const canvas = document.getElementById('flowerCanvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById("flower");
+    const ctx = canvas.getContext("2d");
     const w = canvas.width;
     const h = canvas.height;
     const cx = w / 2;
     const cy = h / 2;
+    let angle = 0;
 
     const petalCount = 4;
     const petalRadius = 80;
-    let angle = 0;
 
     function drawStar(x, y, r, n, inset) {
+      ctx.beginPath();
       ctx.save();
       ctx.translate(x, y);
-      ctx.beginPath();
-      ctx.moveTo(0, -r);
+      ctx.moveTo(0, 0 - r);
       for (let i = 0; i < n; i++) {
         ctx.rotate(Math.PI / n);
-        ctx.lineTo(0, -r * inset);
+        ctx.lineTo(0, 0 - r * inset);
         ctx.rotate(Math.PI / n);
-        ctx.lineTo(0, -r);
+        ctx.lineTo(0, 0 - r);
       }
       ctx.closePath();
-      ctx.fillStyle = '#ffd700';
+      ctx.fillStyle = "#ffd700"; // 金黄色
       ctx.fill();
       ctx.restore();
     }
 
     function render() {
       ctx.clearRect(0, 0, w, h);
+
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(angle);
@@ -62,9 +65,13 @@
         ctx.rotate(a);
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(petalRadius, -petalRadius/2, petalRadius, petalRadius/2, 0, petalRadius);
+        ctx.bezierCurveTo(
+          petalRadius, -petalRadius / 2,
+          petalRadius, petalRadius / 2,
+          0, petalRadius
+        );
         ctx.closePath();
-        ctx.fillStyle = '#e63946';
+        ctx.fillStyle = "#e63946"; // 红色花瓣
         ctx.fill();
         ctx.restore();
       }
